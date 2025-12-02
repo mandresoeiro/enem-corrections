@@ -1,57 +1,88 @@
 <div class="space-y-10">
 
-  <!-- KPIs -->
+  <!-- ================= KPIs ================= -->
   <section>
     <h2 class="text-xl font-bold mb-4">Produtividade do Professor</h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
         <p class="text-xs text-gray-500">Correções hoje</p>
-        <h3 class="text-4xl text-emerald-500">{{ today_count }}</h3>
+        <h3 class="text-4xl font-bold text-emerald-500">{{ today_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
         <p class="text-xs text-gray-500">Total corrigidas</p>
-        <h3 class="text-4xl text-emerald-500">{{ total_corrected }}</h3>
+        <h3 class="text-4xl font-bold text-emerald-500">{{ total_corrected }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
         <p class="text-xs text-gray-500">Pendentes</p>
-        <h3 class="text-4xl text-yellow-500">{{ pending_count }}</h3>
+        <h3 class="text-4xl font-bold text-yellow-500">{{ pending_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
         <p class="text-xs text-gray-500">Média/dia</p>
-        <h3 class="text-4xl text-emerald-500">{{ avg_per_day }}</h3>
+        <h3 class="text-4xl font-bold text-emerald-500">{{ avg_per_day }}</h3>
       </div>
+
     </div>
   </section>
 
-  <!-- GRÁFICO -->
+
+  <!-- ================= GRÁFICO DE PRODUTIVIDADE ================= -->
   <section>
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700">
       <h2 class="text-xl font-bold mb-4">Correções (últimos 7 dias)</h2>
       <canvas id="teacherProd"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
+      const labelsProd = {{ labels|safe }};
+      const valuesProd = {{ values|safe }};
+
       new Chart(document.getElementById('teacherProd'), {
         type: 'line',
         data: {
-          labels: {{ labels| safe }},
-        datasets: [{
-          label: 'Produção diária',
-          data: {{ values| safe }},
-        borderColor: '#10b981',
-        backgroundColor: 'rgba(16,185,129,0.2)'
+          labels: labelsProd,
+          datasets: [{
+            label: 'Produção diária',
+            data: valuesProd,
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16,185,129,0.2)',
+            borderWidth: 3,
+            tension: 0.35,
+            pointRadius: 4,
+            pointBackgroundColor: '#10b981',
+            fill: true,
           }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1, color: '#6b7280' },
+              grid: { color: 'rgba(0,0,0,0.1)' }
+            },
+            x: {
+              ticks: { color: '#6b7280' },
+              grid: { display: false }
+            }
+          }
         }
       });
     </script>
   </section>
 
-  <!-- LISTA DE PENDENTES -->
+
+  <!-- ================= LISTA DE PENDENTES ================= -->
   <section>
     <h2 class="text-xl font-bold mb-4">Pendentes</h2>
     {% include "dashboard/components/table_essays.html" %}

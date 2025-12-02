@@ -1,6 +1,6 @@
 <div class="space-y-10">
 
-  <!-- KPIs -->
+  <!-- ================= KPIS ================= -->
   <section>
     <h2 class="text-xl font-bold mb-4">Meu Desempenho</h2>
 
@@ -8,53 +8,70 @@
 
       <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
         <p class="text-sm text-gray-500">Média Geral</p>
-        <h3 class="text-4xl text-emerald-500">{{ avg_score }}</h3>
+        <h3 class="text-4xl text-emerald-500 font-bold">{{ avg_score }}</h3>
       </div>
 
       <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
         <p class="text-sm text-gray-500">Redações enviadas</p>
-        <h3 class="text-4xl text-emerald-500">{{ essays_count }}</h3>
+        <h3 class="text-4xl text-emerald-500 font-bold">{{ essays_count }}</h3>
       </div>
 
       <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
         <p class="text-sm text-gray-500">Pendentes</p>
-        <h3 class="text-4xl text-yellow-500">{{ pending_count }}</h3>
+        <h3 class="text-4xl text-yellow-500 font-bold">{{ pending_count }}</h3>
       </div>
 
       <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
         <p class="text-sm text-gray-500">Melhor competência</p>
-        <h3 class="text-2xl text-emerald-500">{{ best_competence }}</h3>
+        <h3 class="text-2xl text-emerald-500 font-bold">{{ best_competence }}</h3>
       </div>
 
     </div>
   </section>
 
-  <!-- GRÁFICO RADAR -->
+  <!-- ================= GRÁFICO RADAR ================= -->
   <section>
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700">
       <h2 class="text-xl font-bold mb-4">Competências ENEM</h2>
       <canvas id="radarCompetencias"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
+      const radarData = {{ competencies|safe }};
+
       new Chart(document.getElementById('radarCompetencias'), {
         type: 'radar',
         data: {
           labels: ['C1', 'C2', 'C3', 'C4', 'C5'],
           datasets: [{
             label: 'Notas',
-            data: {{ competencies| safe }
-      },
-        backgroundColor: 'rgba(16,185,129,0.2)',
-        borderColor: '#10b981'
+            data: radarData,
+            backgroundColor: 'rgba(16,185,129,0.25)',
+            borderColor: '#10b981',
+            borderWidth: 2,
+            pointBackgroundColor: '#10b981',
+            pointBorderColor: '#fff',
           }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            r: {
+              suggestedMin: 0,
+              suggestedMax: 200,
+              grid: { color: 'rgba(0,0,0,0.1)' },
+              angleLines: { color: 'rgba(0,0,0,0.15)' },
+              pointLabels: { color: '#6b7280', font: { size: 12 } }
+            }
+          }
         }
       });
     </script>
   </section>
 
-  <!-- LISTA -->
+  <!-- ================= LISTA ================= -->
   <section>
     <h2 class="text-xl font-bold mb-4">Últimas Redações</h2>
     {% include "dashboard/components/table_essays.html" %}

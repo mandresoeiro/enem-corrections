@@ -1,32 +1,38 @@
 {% extends "dashboard/base.html" %}
 
+{# ======================================================
+#  HEADER DO DASHBOARD
+# ====================================================== #}
 {% block header %}
-{{ title }}
+  {{ title }}
 {% endblock %}
 
+{# ======================================================
+#  CONTEÚDO PRINCIPAL
+# ====================================================== #}
 {% block content %}
 
-<div class="space-y-6">
+<div class="space-y-8">
 
-  {# ================================
-  DASHBOARD DO ALUNO
-  ================================= #}
+  {# ====================================================
+  #  DASHBOARD DO ALUNO
+  # ==================================================== #}
   {% if show_student_cards %}
-  {% include "dashboard/student_dashboard.html" %}
+      {% include "dashboard/student_dashboard.html" %}
   {% endif %}
 
-  {# ================================
-  DASHBOARD DO PROFESSOR
-  ================================= #}
+  {# ====================================================
+  #  DASHBOARD DO PROFESSOR
+  # ==================================================== #}
   {% if show_teacher_cards %}
-  {% include "dashboard/teacher_dashboard.html" %}
+      {% include "dashboard/teacher_dashboard.html" %}
   {% endif %}
 
-  {# ================================
-  DASHBOARD DO ADMIN
-  ================================= #}
+  {# ====================================================
+  #  DASHBOARD DO ADMINISTRADOR
+  # ==================================================== #}
   {% if show_admin_cards %}
-  {% include "dashboard/admin_dashboard.html" %}
+      {% include "dashboard/admin_dashboard.html" %}
   {% endif %}
 
 </div>
