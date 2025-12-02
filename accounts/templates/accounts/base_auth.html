@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="h-full">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título dinâmico -->
+  <title>{% block title %}ENEM Corrections{% endblock %}</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Configuração extra do Tailwind (tema ENEM Pro) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            enem: {
+              light: "#d1fae5",
+              DEFAULT: "#10b981",
+              dark: "#064e3b",
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Tema Dark Mode + persistência -->
+  <script>
+    // Ativa automaticamente o tema salvo
+    if (localStorage.theme === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+
+    // Alterna entre Light e Dark
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.classList.toggle("dark");
+      localStorage.theme = html.classList.contains("dark") ? "dark" : "light";
+    }
+  </script>
+
+  <!-- Animações (reutilizáveis para login/register/forgot) -->
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fadeIn {
+      animation: fadeIn 0.4s ease-out;
+    }
+  </style>
+</head>
+
+<body class="h-full bg-emerald-50 dark:bg-gray-900 transition-all duration-300">
+
+  <!-- Layout centralizado verticalmente -->
+  <div class="flex items-center justify-center h-full px-4">
+
+    <!-- Card principal -->
+    <div class="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl 
+                border border-emerald-200 dark:border-gray-700 transition-all duration-300 animate-fadeIn">
+
+      <!-- Cabeçalho -->
+      <div class="flex justify-between items-center mb-6">
+
+        <div class="flex items-center gap-3">
+          <!-- Logo (opcional) -->
+          {% if logo %}
+          <img src="{{ logo }}" alt="Logo" class="w-10 h-10 rounded-full shadow" />
+          {% endif %}
+
+          <h1 class="text-3xl font-extrabold text-emerald-700 dark:text-emerald-300 tracking-tight">
+            ENEM Corrections
+          </h1>
+        </div>
+
+        <!-- Botão tema claro/escuro -->
+        <button onclick="toggleTheme()" class="text-sm px-3 py-1 rounded-lg 
+                       bg-gray-200 dark:bg-gray-700 
+                       dark:text-gray-200 
+                       hover:bg-gray-300 dark:hover:bg-gray-600 
+                       transition font-medium">
+          🌓 Tema
+        </button>
+      </div>
+
+      <!-- Conteúdo dinâmico (login/register/forgot) -->
+      {% block content %}
+      {% endblock %}
+
+    </div>
+
+  </div>
+</body>
+
+</html>

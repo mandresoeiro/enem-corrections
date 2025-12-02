@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="h-full bg-gray-100">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}ENEM Dashboard{% endblock %}</title>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Config paleta verde -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0f766e',      /* emerald-700 */
+            primaryDark: '#064e3b', /* emerald-900 */
+            primaryLight: '#10b981', /* emerald-500 */
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="min-h-full">
+
+  <div class="flex">
+
+    <!-- SIDEBAR -->
+    {% include "dashboard/components/sidebar.html" %}
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 p-6">
+      {% include "dashboard/components/topbar.html" %}
+      <main class="mt-6">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

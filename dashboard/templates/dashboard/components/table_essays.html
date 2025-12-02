@@ -1,0 +1,20 @@
+<div hx-target="#table-body" hx-swap="innerHTML">
+
+  <div class="flex items-center justify-between mb-4">
+
+    <!-- Busca -->
+    <input type="text" name="q" placeholder="Buscar tema..." hx-get="{% url 'dashboard:essays-list' %}"
+      hx-trigger="keyup changed delay:300ms" class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg w-64" />
+
+    <!-- Filtro -->
+    <select name="status" hx-get="{% url 'dashboard:essays-list' %}" hx-trigger="change"
+      class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
+      <option value="">Todos</option>
+      <option value="pending">Pendentes</option>
+      <option value="corrected">Corrigidas</option>
+    </select>
+
+  </div>
+
+  {% include "dashboard/components/pagination.html" %}
+</div>

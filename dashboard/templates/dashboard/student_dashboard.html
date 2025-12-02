@@ -1,0 +1,63 @@
+<div class="space-y-10">
+
+  <!-- KPIs -->
+  <section>
+    <h2 class="text-xl font-bold mb-4">Meu Desempenho</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-sm text-gray-500">Média Geral</p>
+        <h3 class="text-4xl text-emerald-500">{{ avg_score }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-sm text-gray-500">Redações enviadas</p>
+        <h3 class="text-4xl text-emerald-500">{{ essays_count }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-sm text-gray-500">Pendentes</p>
+        <h3 class="text-4xl text-yellow-500">{{ pending_count }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-sm text-gray-500">Melhor competência</p>
+        <h3 class="text-2xl text-emerald-500">{{ best_competence }}</h3>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GRÁFICO RADAR -->
+  <section>
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border">
+      <h2 class="text-xl font-bold mb-4">Competências ENEM</h2>
+      <canvas id="radarCompetencias"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      new Chart(document.getElementById('radarCompetencias'), {
+        type: 'radar',
+        data: {
+          labels: ['C1', 'C2', 'C3', 'C4', 'C5'],
+          datasets: [{
+            label: 'Notas',
+            data: {{ competencies| safe }
+      },
+        backgroundColor: 'rgba(16,185,129,0.2)',
+        borderColor: '#10b981'
+          }]
+        }
+      });
+    </script>
+  </section>
+
+  <!-- LISTA -->
+  <section>
+    <h2 class="text-xl font-bold mb-4">Últimas Redações</h2>
+    {% include "dashboard/components/table_essays.html" %}
+  </section>
+
+</div>

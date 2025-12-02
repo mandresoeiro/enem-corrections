@@ -1,0 +1,60 @@
+<div class="space-y-10">
+
+  <!-- KPIs -->
+  <section>
+    <h2 class="text-xl font-bold mb-4">Visão Administrativa</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-sm text-gray-500">Usuários</p>
+        <h3 class="text-4xl text-emerald-500">{{ users_count }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-sm text-gray-500">Professores</p>
+        <h3 class="text-4xl text-emerald-500">{{ teachers_count }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-sm text-gray-500">Redações</p>
+        <h3 class="text-4xl text-emerald-500">{{ essays_count }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-sm text-gray-500">Pendentes</p>
+        <h3 class="text-4xl text-red-500">{{ pending_count }}</h3>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GRÁFICO -->
+  <section>
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border">
+      <canvas id="adminChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      new Chart(document.getElementById('adminChart'), {
+        type: 'bar',
+        data: {
+          labels: {{ labels| safe }},
+        datasets: [{
+          label: 'Envios por dia',
+          data: {{ values| safe }},
+        backgroundColor: '#10b981'
+          }]
+        }
+      });
+    </script>
+  </section>
+
+  <!-- LISTA DE REDAÇÕES -->
+  <section>
+    <h2 class="text-xl font-bold mb-4">Últimas Redações</h2>
+    {% include "dashboard/components/table_essays.html" %}
+  </section>
+
+</div>

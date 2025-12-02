@@ -1,0 +1,60 @@
+<div class="space-y-10">
+
+  <!-- KPIs -->
+  <section>
+    <h2 class="text-xl font-bold mb-4">Produtividade do Professor</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-xs text-gray-500">Correções hoje</p>
+        <h3 class="text-4xl text-emerald-500">{{ today_count }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-xs text-gray-500">Total corrigidas</p>
+        <h3 class="text-4xl text-emerald-500">{{ total_corrected }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-xs text-gray-500">Pendentes</p>
+        <h3 class="text-4xl text-yellow-500">{{ pending_count }}</h3>
+      </div>
+
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
+        <p class="text-xs text-gray-500">Média/dia</p>
+        <h3 class="text-4xl text-emerald-500">{{ avg_per_day }}</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRÁFICO -->
+  <section>
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border">
+      <h2 class="text-xl font-bold mb-4">Correções (últimos 7 dias)</h2>
+      <canvas id="teacherProd"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      new Chart(document.getElementById('teacherProd'), {
+        type: 'line',
+        data: {
+          labels: {{ labels| safe }},
+        datasets: [{
+          label: 'Produção diária',
+          data: {{ values| safe }},
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.2)'
+          }]
+        }
+      });
+    </script>
+  </section>
+
+  <!-- LISTA DE PENDENTES -->
+  <section>
+    <h2 class="text-xl font-bold mb-4">Pendentes</h2>
+    {% include "dashboard/components/table_essays.html" %}
+  </section>
+
+</div>

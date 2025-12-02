@@ -1,0 +1,20 @@
+{% extends "dashboard/components/cards.html" %}
+
+{% block cards %}
+
+<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+  <h3 class="text-lg font-semibold mb-2">Total de Redações</h3>
+  <p class="text-3xl font-bold text-emerald-600">{{ total_essays }}</p>
+</div>
+
+<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+  <h3 class="text-lg font-semibold mb-2">Última Nota</h3>
+  <p class="text-3xl font-bold text-emerald-600">{{ last_score|default:"—" }}</p>
+</div>
+
+<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
+  <h3 class="text-lg font-semibold mb-2">Média Geral</h3>
+  <p class="text-3xl font-bold text-emerald-600">{{ average_score|default:"—" }}</p>
+</div>
+
+{% endblock %}
