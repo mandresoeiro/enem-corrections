@@ -1,38 +1,41 @@
 {% extends "dashboard/base.html" %}
 
-{# ======================================================
-#  HEADER DO DASHBOARD
-# ====================================================== #}
+{% block title %} Dashboard — ENEM Corrections {% endblock %}
+
 {% block header %}
-  {{ title }}
+📊 Dashboard
 {% endblock %}
 
-{# ======================================================
-#  CONTEÚDO PRINCIPAL
-# ====================================================== #}
 {% block content %}
 
-<div class="space-y-8">
+<!-- CONTAINER GERAL DO DASHBOARD -->
+<div class="space-y-10">
 
-  {# ====================================================
-  #  DASHBOARD DO ALUNO
-  # ==================================================== #}
+  <!-- ===========================
+       1) DASHBOARD DO ALUNO
+       =========================== -->
   {% if show_student_cards %}
+  <section class="space-y-8">
       {% include "dashboard/student_dashboard.html" %}
+  </section>
   {% endif %}
 
-  {# ====================================================
-  #  DASHBOARD DO PROFESSOR
-  # ==================================================== #}
+  <!-- ===========================
+       2) DASHBOARD DO PROFESSOR
+       =========================== -->
   {% if show_teacher_cards %}
+  <section class="space-y-8">
       {% include "dashboard/teacher_dashboard.html" %}
+  </section>
   {% endif %}
 
-  {# ====================================================
-  #  DASHBOARD DO ADMINISTRADOR
-  # ==================================================== #}
+  <!-- ===========================
+       3) DASHBOARD DO ADMIN
+       =========================== -->
   {% if show_admin_cards %}
+  <section class="space-y-8">
       {% include "dashboard/admin_dashboard.html" %}
+  </section>
   {% endif %}
 
 </div>

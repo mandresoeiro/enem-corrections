@@ -1,39 +1,63 @@
-<div class="space-y-10">
+<div class="space-y-12">
 
-  <!-- ================= KPIS ================= -->
+  <!-- ===================== TÍTULO ===================== -->
+  <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+    Seu Desempenho no ENEM
+  </h2>
+
+  <!-- ===================== KPIs ===================== -->
   <section>
-    <h2 class="text-xl font-bold mb-4">Meu Desempenho</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
-        <p class="text-sm text-gray-500">Média Geral</p>
-        <h3 class="text-4xl text-emerald-500 font-bold">{{ avg_score }}</h3>
+      <!-- Média Geral -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Média Geral</p>
+          <span class="text-emerald-500 text-xl">📊</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ avg_score }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
-        <p class="text-sm text-gray-500">Redações enviadas</p>
-        <h3 class="text-4xl text-emerald-500 font-bold">{{ essays_count }}</h3>
+      <!-- Redações enviadas -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Redações Enviadas</p>
+          <span class="text-emerald-500 text-xl">📝</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ essays_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
-        <p class="text-sm text-gray-500">Pendentes</p>
-        <h3 class="text-4xl text-yellow-500 font-bold">{{ pending_count }}</h3>
+      <!-- Pendentes -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Pendentes</p>
+          <span class="text-yellow-500 text-xl">⏳</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-yellow-500">{{ pending_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow">
-        <p class="text-sm text-gray-500">Melhor competência</p>
-        <h3 class="text-2xl text-emerald-500 font-bold">{{ best_competence }}</h3>
+      <!-- Melhor Competência -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Melhor Competência</p>
+          <span class="text-emerald-500 text-xl">⭐</span>
+        </div>
+        <h3 class="mt-2 text-2xl font-bold text-emerald-500">{{ best_competence }}</h3>
       </div>
 
     </div>
   </section>
 
-  <!-- ================= GRÁFICO RADAR ================= -->
+  <!-- ===================== GRÁFICO RADAR ===================== -->
   <section>
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700">
-      <h2 class="text-xl font-bold mb-4">Competências ENEM</h2>
-      <canvas id="radarCompetencias"></canvas>
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow p-8 border border-gray-200 dark:border-gray-700">
+
+      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+        Desempenho nas Competências ENEM
+      </h2>
+
+      <canvas id="radarCompetencias" class="max-h-[380px]"></canvas>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -44,26 +68,34 @@
       new Chart(document.getElementById('radarCompetencias'), {
         type: 'radar',
         data: {
-          labels: ['C1', 'C2', 'C3', 'C4', 'C5'],
+          labels: ['Competência 1', 'Competência 2', 'Competência 3', 'Competência 4', 'Competência 5'],
           datasets: [{
-            label: 'Notas',
+            label: 'Notas por Competência',
             data: radarData,
-            backgroundColor: 'rgba(16,185,129,0.25)',
+            backgroundColor: 'rgba(16,185,129,0.22)',
             borderColor: '#10b981',
             borderWidth: 2,
             pointBackgroundColor: '#10b981',
-            pointBorderColor: '#fff',
+            pointRadius: 5,
+            pointHoverRadius: 8,
           }]
         },
         options: {
           responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
           scales: {
             r: {
+              angleLines: { color: 'rgba(0,0,0,0.1)' },
+              grid: { color: 'rgba(0,0,0,0.1)' },
               suggestedMin: 0,
               suggestedMax: 200,
-              grid: { color: 'rgba(0,0,0,0.1)' },
-              angleLines: { color: 'rgba(0,0,0,0.15)' },
-              pointLabels: { color: '#6b7280', font: { size: 12 } }
+              ticks: { display: false },
+              pointLabels: {
+                color: '#6b7280',
+                font: { size: 13 }
+              }
             }
           }
         }
@@ -71,9 +103,10 @@
     </script>
   </section>
 
-  <!-- ================= LISTA ================= -->
+  <!-- ===================== LISTA DE REDAÇÕES ===================== -->
   <section>
-    <h2 class="text-xl font-bold mb-4">Últimas Redações</h2>
+    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Últimas Redações Enviadas</h2>
+
     {% include "dashboard/components/table_essays.html" %}
   </section>
 

@@ -1,44 +1,67 @@
-<div class="space-y-10">
+<div class="space-y-12">
 
-  <!-- ================= KPI CARDS ================= -->
+  <!-- ===================== TÍTULO ===================== -->
+  <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+    Visão Administrativa
+  </h2>
+
+  <!-- ===================== KPI CARDS ===================== -->
   <section>
-    <h2 class="text-xl font-bold mb-4">Visão Administrativa</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
-        <p class="text-sm text-gray-500">Usuários</p>
-        <h3 class="text-4xl font-bold text-emerald-500">{{ users_count }}</h3>
+      <!-- Usuários -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500">Usuários</p>
+          <span class="text-emerald-500 text-xl">👥</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ users_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
-        <p class="text-sm text-gray-500">Professores</p>
-        <h3 class="text-4xl font-bold text-emerald-500">{{ teachers_count }}</h3>
+      <!-- Professores -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500">Professores</p>
+          <span class="text-emerald-500 text-xl">🎓</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ teachers_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
-        <p class="text-sm text-gray-500">Redações</p>
-        <h3 class="text-4xl font-bold text-emerald-500">{{ essays_count }}</h3>
+      <!-- Redações -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500">Redações</p>
+          <span class="text-emerald-500 text-xl">📝</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ essays_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
-        <p class="text-sm text-gray-500">Pendentes</p>
-        <h3 class="text-4xl font-bold text-red-500">{{ pending_count }}</h3>
+      <!-- Pendentes -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500">Pendentes</p>
+          <span class="text-red-500 text-xl">⚠️</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-red-500">{{ pending_count }}</h3>
       </div>
 
     </div>
   </section>
 
 
-  <!-- ================= GRÁFICO ADMIN ================= -->
+  <!-- ===================== GRÁFICO DE ENVIO ===================== -->
   <section>
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700">
-      <h2 class="text-xl font-bold mb-4">Envios por dia (últimos 7 dias)</h2>
-      <canvas id="adminChart"></canvas>
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
+
+      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+        Envios por Dia (Últimos 7 dias)
+      </h2>
+
+      <canvas id="adminChart" class="max-h-[380px]"></canvas>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
       const adminLabels = {{ labels|safe }};
       const adminValues = {{ values|safe }};
@@ -50,10 +73,11 @@
           datasets: [{
             label: 'Envios por dia',
             data: adminValues,
-            backgroundColor: '#10b981',
+            backgroundColor: 'rgba(16,185,129,0.7)',
             borderColor: '#065f46',
             borderWidth: 2,
             hoverBackgroundColor: '#059669',
+            borderRadius: 6,
           }]
         },
         options: {
@@ -66,7 +90,7 @@
             y: {
               beginAtZero: true,
               ticks: { color: '#6b7280' },
-              grid: { color: 'rgba(0,0,0,0.1)' }
+              grid: { color: 'rgba(0,0,0,0.08)' }
             },
             x: {
               ticks: { color: '#6b7280' },
@@ -79,9 +103,12 @@
   </section>
 
 
-  <!-- ================= LISTA DE REDAÇÕES ================= -->
-  <section class="pb-10">
-    <h2 class="text-xl font-bold mb-4">Últimas Redações</h2>
+  <!-- ===================== LISTA DE REDAÇÕES ===================== -->
+  <section class="pb-12">
+    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+      Últimas Redações
+    </h2>
+
     {% include "dashboard/components/table_essays.html" %}
   </section>
 

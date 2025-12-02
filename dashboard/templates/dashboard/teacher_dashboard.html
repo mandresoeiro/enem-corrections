@@ -1,40 +1,64 @@
-<div class="space-y-10">
+<div class="space-y-12">
 
-  <!-- ================= KPIs ================= -->
+  <!-- ===================== TÍTULO ===================== -->
+  <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+    Produtividade do Professor
+  </h2>
+
+  <!-- ===================== KPIs ===================== -->
   <section>
-    <h2 class="text-xl font-bold mb-4">Produtividade do Professor</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
-        <p class="text-xs text-gray-500">Correções hoje</p>
-        <h3 class="text-4xl font-bold text-emerald-500">{{ today_count }}</h3>
+      <!-- Correções Hoje -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Correções Hoje</p>
+          <span class="text-emerald-500 text-xl">📌</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ today_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
-        <p class="text-xs text-gray-500">Total corrigidas</p>
-        <h3 class="text-4xl font-bold text-emerald-500">{{ total_corrected }}</h3>
+      <!-- Total Corrigidas -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Total Corrigidas</p>
+          <span class="text-emerald-500 text-xl">📈</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ total_corrected }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
-        <p class="text-xs text-gray-500">Pendentes</p>
-        <h3 class="text-4xl font-bold text-yellow-500">{{ pending_count }}</h3>
+      <!-- Pendentes -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Pendentes</p>
+          <span class="text-yellow-500 text-xl">⏳</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-yellow-500">{{ pending_count }}</h3>
       </div>
 
-      <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow border dark:border-gray-700">
-        <p class="text-xs text-gray-500">Média/dia</p>
-        <h3 class="text-4xl font-bold text-emerald-500">{{ avg_per_day }}</h3>
+      <!-- Média por dia -->
+      <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Média / Dia</p>
+          <span class="text-emerald-500 text-xl">⚡</span>
+        </div>
+        <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ avg_per_day }}</h3>
       </div>
 
     </div>
   </section>
 
 
-  <!-- ================= GRÁFICO DE PRODUTIVIDADE ================= -->
+  <!-- ===================== GRÁFICO DE PRODUTIVIDADE ===================== -->
   <section>
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700">
-      <h2 class="text-xl font-bold mb-4">Correções (últimos 7 dias)</h2>
-      <canvas id="teacherProd"></canvas>
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
+
+      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+        Correções (Últimos 7 dias)
+      </h2>
+
+      <canvas id="teacherProd" class="max-h-[380px]"></canvas>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -48,15 +72,16 @@
         data: {
           labels: labelsProd,
           datasets: [{
-            label: 'Produção diária',
+            label: 'Produção Diária',
             data: valuesProd,
             borderColor: '#10b981',
             backgroundColor: 'rgba(16,185,129,0.2)',
             borderWidth: 3,
-            tension: 0.35,
-            pointRadius: 4,
+            pointRadius: 5,
             pointBackgroundColor: '#10b981',
-            fill: true,
+            pointHoverRadius: 7,
+            tension: 0.35,
+            fill: true
           }]
         },
         options: {
@@ -68,7 +93,7 @@
           scales: {
             y: {
               beginAtZero: true,
-              ticks: { stepSize: 1, color: '#6b7280' },
+              ticks: { color: '#6b7280' },
               grid: { color: 'rgba(0,0,0,0.1)' }
             },
             x: {
@@ -82,9 +107,12 @@
   </section>
 
 
-  <!-- ================= LISTA DE PENDENTES ================= -->
+  <!-- ===================== LISTA DE PENDENTES ===================== -->
   <section>
-    <h2 class="text-xl font-bold mb-4">Pendentes</h2>
+    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+      Redações Pendentes
+    </h2>
+
     {% include "dashboard/components/table_essays.html" %}
   </section>
 
