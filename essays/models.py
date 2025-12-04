@@ -6,6 +6,7 @@ User = settings.AUTH_USER_MODEL
 
 
 class Essay(models.Model):
+    pdf = models.FileField(upload_to="pdfs/", null=True, blank=True, help_text="Arquivo PDF da redação (upload manual ou automático)")
     """
     Redação enviada por um aluno.
     Agora funciona como a entidade "Agregadora".

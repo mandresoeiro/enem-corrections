@@ -1,14 +1,12 @@
 <!-- TOPBAR PRO V2 -->
-<header
-  class="w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700
+<header class="w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700
          px-6 py-4 flex items-center justify-between">
 
   <!-- ESQUERDA -->
   <div class="flex items-center gap-4">
 
     <!-- Botão mobile -->
-    <button @click="sidebarOpen = true"
-            class="lg:hidden text-2xl text-gray-700 dark:text-gray-200">
+    <button @click="sidebarOpen = true" class="lg:hidden text-2xl text-gray-700 dark:text-gray-200">
       ☰
     </button>
 
@@ -25,15 +23,14 @@
     <div class="hidden md:flex items-center bg-gray-100 dark:bg-gray-800 px-3 py-2
                 rounded-lg w-64">
       🔍
-      <input type="text" placeholder="Buscar..."
-             class="ml-2 w-full bg-transparent border-none focus:ring-0 outline-none
+      <input type="text" placeholder="Buscar..." class="ml-2 w-full bg-transparent border-none focus:ring-0 outline-none
                     text-sm text-gray-700 dark:text-gray-200">
     </div>
 
     <!-- Notificações -->
     <div x-data="{ open: false }" class="relative">
       <button @click="open = !open"
-              class="relative text-2xl text-gray-700 dark:text-gray-200 hover:opacity-80 transition">
+        class="relative text-2xl text-gray-700 dark:text-gray-200 hover:opacity-80 transition">
         🔔
         {% if notifications_count > 0 %}
         <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full px-1.5">
@@ -42,8 +39,7 @@
         {% endif %}
       </button>
 
-      <div x-show="open" @click.outside="open = false" x-transition
-           class="absolute right-0 mt-3 w-72 bg-white dark:bg-gray-800 shadow-lg
+      <div x-show="open" @click.outside="open = false" x-transition class="absolute right-0 mt-3 w-72 bg-white dark:bg-gray-800 shadow-lg
                   border border-gray-200 dark:border-gray-700 rounded-lg p-4 z-50">
         <h3 class="text-sm font-semibold mb-3 text-gray-800 dark:text-gray-200">
           Notificações
@@ -65,13 +61,11 @@
     </div>
 
     <!-- Dark Mode -->
-    <button
-      @click="
+    <button @click="
         darkMode = !darkMode;
         document.documentElement.classList.toggle('dark');
         localStorage.theme = darkMode ? 'dark' : 'light';
-      "
-      class="text-xl px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-800
+      " class="text-xl px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-800
              hover:bg-gray-200 dark:hover:bg-gray-700 transition">
       🌓
     </button>
@@ -79,17 +73,30 @@
     <!-- Perfil -->
     <div x-data="{ open: false }" class="relative">
       <button @click="open = !open"
-              class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-lg">
+        class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-lg">
         {{ request.user.username|first|upper }}
       </button>
 
-      <div x-show="open" @click.outside="open = false" x-transition
-           class="absolute right-0 mt-3 w-56 bg-white dark:bg-gray-800 shadow-lg
-                  border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden z-50">
+      <div x-show="open" @click.outside="open = false" x-transition class="absolute right-0 mt-3 w-64 bg-white dark:bg-gray-800 shadow-lg
+                  border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden z-50">
 
-        <div class="p-4">
-          <p class="font-semibold">{{ request.user.username }}</p>
-          <p class="text-xs text-gray-500">{{ request.user.role }}</p>
+        <div class="p-4 space-y-1">
+          <p class="font-semibold text-gray-900 dark:text-white">{{ request.user.username }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Papel: {{ request.user.role|capfirst }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">Último login: {{ request.user.last_login|date:"d/m/Y H:i"
+            }}</p>
+        </div>
+
+        <div class="px-4 pb-3 text-sm text-gray-600 dark:text-gray-300 space-y-1">
+          {% if corrected_essays_count is not None %}
+          <p>✅ Corrigidas: <strong>{{ corrected_essays_count }}</strong></p>
+          {% endif %}
+          {% if pending_essays_count is not None %}
+          <p>⏳ Pendentes: <strong>{{ pending_essays_count }}</strong></p>
+          {% endif %}
+          {% if total_users %}
+          <p>👥 Total de Usuários: <strong>{{ total_users }}</strong></p>
+          {% endif %}
         </div>
 
         <div class="border-t dark:border-gray-700">
@@ -101,14 +108,11 @@
         </div>
       </div>
     </div>
-
   </div>
 </header>
 
 <style>
   .dropdown-item {
-    @apply block px-4 py-2 text-sm
-           text-gray-700 dark:text-gray-200
-           hover:bg-emerald-50 dark:hover:bg-gray-700;
+    @apply block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700;
   }
 </style>

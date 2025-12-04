@@ -86,8 +86,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  // Você pode substituir esses dados por valores vindos do backend via contexto,
-  // ou via endpoint JSON com fetch().
   const essaysPerMonthData = {
     labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
     datasets: [{
@@ -113,16 +111,11 @@
     }]
   };
 
-  // Configuração de tema básico (usa cores padrão do Chart.js,
-  // mas o background do card já segue o dark mode via Tailwind).
-  const ctx1 = document.getElementById("essaysPerMonthChart").getContext("2d");
-  new Chart(ctx1, {
+  new Chart(document.getElementById("essaysPerMonthChart"), {
     type: "line",
     data: essaysPerMonthData,
     options: {
-      plugins: {
-        legend: { display: false }
-      },
+      plugins: { legend: { display: false } },
       scales: {
         x: { grid: { display: false } },
         y: { beginAtZero: true }
@@ -130,14 +123,11 @@
     }
   });
 
-  const ctx2 = document.getElementById("pendingPerTeacherChart").getContext("2d");
-  new Chart(ctx2, {
+  new Chart(document.getElementById("pendingPerTeacherChart"), {
     type: "bar",
     data: pendingPerTeacherData,
     options: {
-      plugins: {
-        legend: { display: false }
-      },
+      plugins: { legend: { display: false } },
       scales: {
         x: { grid: { display: false } },
         y: { beginAtZero: true }
@@ -145,8 +135,7 @@
     }
   });
 
-  const ctx3 = document.getElementById("usersByRoleChart").getContext("2d");
-  new Chart(ctx3, {
+  new Chart(document.getElementById("usersByRoleChart"), {
     type: "doughnut",
     data: usersByRoleData,
     options: {

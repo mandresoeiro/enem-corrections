@@ -27,7 +27,7 @@ class Command(BaseCommand):
 
         if not email or not password:
             self.stdout.write(
-                self.style.ERROR(
+                self.style.error(
                     "ERRO: Defina DJANGO_ADMIN_EMAIL e DJANGO_ADMIN_PASSWORD no .env"
                 )
             )
@@ -35,7 +35,7 @@ class Command(BaseCommand):
 
         if User.objects.filter(email=email).exists():
             self.stdout.write(
-                self.style.WARNING(
+                self.style.warning(
                     f"Superusuário com email {email} já existe. Nada a fazer."
                 )
             )
@@ -47,6 +47,7 @@ class Command(BaseCommand):
             username=username,
             email=email,
             password=password,
+            role="admin",
         )
 
         self.stdout.write(

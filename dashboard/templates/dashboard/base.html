@@ -1,79 +1,68 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="pt-br"
-      x-data="{
-        sidebarOpen: false,
-        darkMode: localStorage.theme === 'dark'
-      }"
-      x-init="if (darkMode) document.documentElement.classList.add('dark')"
-      class="h-full">
+<html lang="pt-br" class="h-full scroll-smooth">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>{% block title %}ENEM Corrections{% endblock %}</title>
+  <title>{% block title %}ENEM Corrections Dashboard{% endblock %}</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Alpine.js -->
+  <!-- Alpine.js para interatividade (dropdowns, toggles etc.) -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- Paleta Emerald -->
+  <!-- Paleta custom ENEM -->
   <style>
     :root {
-      --emerald-main: #10b981;
-      --emerald-dark: #047857;
-      --emerald-light: #6ee7b7;
-    }
-
-    /* Componentes utilitários globais */
-    .card {
-      @apply bg-white dark:bg-gray-800 rounded-xl shadow border border-gray-200 dark:border-gray-700 p-6;
-    }
-
-    .kpi {
-      @apply text-4xl font-bold text-emerald-500;
+      --primary: #0f766e;
+      --primary-dark: #064e3b;
+      --primary-light: #10b981;
+      --bg-light: #f0fdfa;
     }
   </style>
+
+  <!-- Dark/Light Mode -->
+  <script>
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") document.documentElement.classList.add("dark");
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle("dark");
+      const now = document.documentElement.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem("theme", now);
+    }
+  </script>
 </head>
 
-<body class="h-full bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased">
+<body class="h-full antialiased bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
 
-  <!-- =============== BACKDROP (Mobile) =============== -->
-  <div x-show="sidebarOpen"
-       @click="sidebarOpen = false"
-       class="fixed inset-0 z-30 bg-black/40 lg:hidden">
-  </div>
-
-  <!-- =============== LAYOUT PRINCIPAL =============== -->
+  <!-- Container principal (Sidebar + Conteúdo) -->
   <div class="flex h-screen overflow-hidden">
 
     <!-- SIDEBAR -->
     {% include "dashboard/components/sidebar.html" %}
 
-    <!-- =============== MAIN WRAPPER =============== -->
-    <div class="flex-1 flex flex-col min-w-0">
+    <!-- ÁREA PRINCIPAL -->
+    <div class="flex flex-1 flex-col min-w-0">
 
       <!-- TOPBAR -->
       {% include "dashboard/components/topbar.html" %}
 
-      <!-- =============== CONTENT =============== -->
-      <main class="flex-1 overflow-y-auto p-6">
-
-        <!-- Título dinâmico do dashboard -->
-        {% if block.header %}
-          <h1 class="text-2xl font-bold mb-6 text-emerald-700 dark:text-emerald-300">
-            {% block header %}{% endblock %}
-          </h1>
-        {% endif %}
-
-        {% block content %}{% endblock %}
+      <!-- CONTEÚDO PRINCIPAL -->
+      <main class="p-6 md:p-8 overflow-y-auto">
+        <div class="mx-auto max-w-6xl">
+          {% block content %}
+          {% endblock %}
+        </div>
       </main>
+
     </div>
   </div>
 
 </body>
+
 </html>

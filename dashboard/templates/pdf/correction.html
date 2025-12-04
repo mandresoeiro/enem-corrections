@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Correção de Redação</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #0f766e; }
+        .texto { margin-top: 20px; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+    <h1>{{ essay.titulo }}</h1>
+    <div class="texto">
+        {{ essay.texto|linebreaksbr }}
+    </div>
+</body>
+</html>

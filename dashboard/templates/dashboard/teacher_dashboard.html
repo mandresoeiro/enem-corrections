@@ -2,34 +2,77 @@
 
   <!-- ===================== TÍTULO ===================== -->
   <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
-    Produtividade do Professor
+    Correções Recentes
   </h2>
 
   <!-- ===================== KPIs ===================== -->
-  <section>
-    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
-      <!-- Correções Hoje -->
+  <!-- ===================== REDAÇÕES ENVIADAS ===================== -->
+  <section class="mt-8">
+    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+      <span>Redações Enviadas</span>
+      <span class="text-gray-400 text-sm" title="Clique no ícone para visualizar a redação em modo flipbook interativo">🛈</span>
+    </h3>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white rounded shadow">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">Aluno</th>
+            <th class="py-2 px-4 border-b">Título</th>
+            <th class="py-2 px-4 border-b">Data de Envio</th>
+            <th class="py-2 px-4 border-b">PDF</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for essay in essays %}
+          <tr>
+            <td class="py-2 px-4 border-b">{{ essay.student.email }}</td>
+            <td class="py-2 px-4 border-b">{{ essay.title }}</td>
+            <td class="py-2 px-4 border-b">{{ essay.created_at|date:'d/m/Y H:i' }}</td>
+            <td class="py-2 px-4 border-b">
+              {% if essay.pdf_url %}
+                <a href="{% url 'dashboard:pdf-flipbook' essay.id %}" target="_blank" class="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1 rounded transition" title="Visualizar redação em flipbook">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                  Flipbook
+                </a>
+              {% else %}
+                <span class="text-gray-400">Não disponível</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="py-4 text-center text-gray-500">Nenhuma redação enviada.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Corrigidas hoje -->
       <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
-        <div class="flex items-center justify-between">
-          <p class="text-sm text-gray-500 dark:text-gray-400">Correções Hoje</p>
-          <span class="text-emerald-500 text-xl">📌</span>
+        <div class="flex justify-between items-center">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Corrigidas Hoje</p>
+          <span class="text-emerald-500 text-xl">✅</span>
         </div>
         <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ today_count }}</h3>
       </div>
 
       <!-- Total Corrigidas -->
       <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
-        <div class="flex items-center justify-between">
+        <div class="flex justify-between items-center">
           <p class="text-sm text-gray-500 dark:text-gray-400">Total Corrigidas</p>
-          <span class="text-emerald-500 text-xl">📈</span>
+          <span class="text-emerald-500 text-xl">📚</span>
         </div>
         <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ total_corrected }}</h3>
       </div>
 
       <!-- Pendentes -->
       <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
-        <div class="flex items-center justify-between">
+        <div class="flex justify-between items-center">
           <p class="text-sm text-gray-500 dark:text-gray-400">Pendentes</p>
           <span class="text-yellow-500 text-xl">⏳</span>
         </div>
@@ -38,9 +81,9 @@
 
       <!-- Média por dia -->
       <div class="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-lg transition">
-        <div class="flex items-center justify-between">
-          <p class="text-sm text-gray-500 dark:text-gray-400">Média / Dia</p>
-          <span class="text-emerald-500 text-xl">⚡</span>
+        <div class="flex justify-between items-center">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Média por Dia</p>
+          <span class="text-emerald-500 text-xl">📈</span>
         </div>
         <h3 class="mt-2 text-4xl font-bold text-emerald-500">{{ avg_per_day }}</h3>
       </div>
@@ -48,57 +91,40 @@
     </div>
   </section>
 
-
-  <!-- ===================== GRÁFICO DE PRODUTIVIDADE ===================== -->
+  <!-- ===================== GRÁFICO DE BARRAS ===================== -->
   <section>
-    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
-
-      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
-        Correções (Últimos 7 dias)
-      </h2>
-
-      <canvas id="teacherProd" class="max-h-[380px]"></canvas>
-
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow p-8 border border-gray-200 dark:border-gray-700">
+      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">Correções por Dia</h2>
+      <canvas id="barCorrecoes"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
-      const labelsProd = {{ labels|safe }};
-      const valuesProd = {{ values|safe }};
+      const ctx = document.getElementById('barCorrecoes').getContext('2d');
 
-      new Chart(document.getElementById('teacherProd'), {
-        type: 'line',
+      new Chart(ctx, {
+        type: 'bar',
         data: {
-          labels: labelsProd,
+          labels: {{ labels|safe }},
           datasets: [{
-            label: 'Produção Diária',
-            data: valuesProd,
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16,185,129,0.2)',
-            borderWidth: 3,
-            pointRadius: 5,
-            pointBackgroundColor: '#10b981',
-            pointHoverRadius: 7,
-            tension: 0.35,
-            fill: true
+            label: 'Redações Corrigidas',
+            data: {{ values|safe }},
+            backgroundColor: '#10b981',
+            borderRadius: 6,
+            barThickness: 32,
           }]
         },
         options: {
           responsive: true,
           plugins: {
-            legend: { display: false },
-            tooltip: { enabled: true }
+            legend: { display: false }
           },
           scales: {
             y: {
               beginAtZero: true,
-              ticks: { color: '#6b7280' },
-              grid: { color: 'rgba(0,0,0,0.1)' }
-            },
-            x: {
-              ticks: { color: '#6b7280' },
-              grid: { display: false }
+              ticks: {
+                stepSize: 1
+              }
             }
           }
         }
@@ -106,14 +132,10 @@
     </script>
   </section>
 
-
-  <!-- ===================== LISTA DE PENDENTES ===================== -->
+  <!-- ===================== REDAÇÕES PENDENTES ===================== -->
   <section>
-    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-      Redações Pendentes
-    </h2>
-
-    {% include "dashboard/components/table_essays.html" %}
+    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Pendentes para Correção</h2>
+    {% include "dashboard/components/table_essays.html" with recent_essays=pending %}
   </section>
 
 </div>

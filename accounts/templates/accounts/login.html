@@ -98,6 +98,23 @@
 
       <!-- Conteúdo dinâmico (login/register/forgot) -->
       {% block content %}
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div class="bg-red-100 text-red-700 p-2 rounded mb-2">
+          Usuário ou senha inválidos.
+        </div>
+        {% endif %}
+        {{ form.as_p }}
+        <button type="submit"
+          class="w-full py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition">Entrar</button>
+        <div class="flex flex-col items-center mt-4 gap-2">
+          <a href="/accounts/register/" class="text-emerald-700 dark:text-emerald-300 hover:underline text-sm">Criar
+            conta</a>
+          <a href="/accounts/password_reset/" class="text-gray-500 dark:text-gray-400 hover:underline text-sm">Esqueci
+            minha senha</a>
+        </div>
+      </form>
       {% endblock %}
 
     </div>

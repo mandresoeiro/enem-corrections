@@ -17,7 +17,6 @@ from django.urls import path, include
 from django.http import JsonResponse
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import TemplateView
 
 
 # ==========================================================
@@ -53,12 +52,8 @@ urlpatterns = [
     # redireciona para LOGIN_URL = "/accounts/login/".
     #
     # Portanto, essa rota DEVE EXISTIR.
-    path(
-        "accounts/login/",
-        TemplateView.as_view(template_name="accounts/login.html"),
-        name="login",
-    ),
-    path("accounts/", include("accounts.urls")),
+    # Removido: rota duplicada de login. LoginView está em accounts/urls.py
+    path("accounts/", include(("accounts.urls", "account"), namespace="account")),
     # ------------------------------------------------------
     # 3. Autenticação REST (JSON) — dj-rest-auth / allauth
     # ------------------------------------------------------
