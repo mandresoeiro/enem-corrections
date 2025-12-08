@@ -1,32 +1,45 @@
 <div class="space-y-12">
   <!-- ===================== FORMULÁRIO DE ENVIO DE REDAÇÃO ===================== -->
   <section>
-    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Enviar Nova Redação</h2>
-    <form method="post" action="/api/essays/create/" enctype="multipart/form-data"
+    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">✍️ Enviar Nova Redação</h2>
+
+    <!-- Mensagens de feedback -->
+    {% if messages %}
+      <div class="mb-4 space-y-2">
+        {% for message in messages %}
+          <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200{% elif message.tags == 'error' %}bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200{% else %}bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'dashboard:essay-submit' %}" enctype="multipart/form-data"
       class="bg-white dark:bg-gray-800 rounded-2xl shadow p-8 mb-8 border border-gray-200 dark:border-gray-700 space-y-6">
       {% csrf_token %}
       <div>
-        <label for="theme" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tema</label>
+        <label for="theme" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">📌 Tema da Redação</label>
         <input type="text" id="theme" name="theme" required
-          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100"
-          placeholder="Ex: Desafios da educação no Brasil" />
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500"
+          placeholder="Ex: Os desafios da educação no Brasil" />
       </div>
       <div>
-        <label for="text" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Texto da
-          Redação</label>
-        <textarea id="text" name="text" rows="6" required
-          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100"
-          placeholder="Digite sua redação aqui..."></textarea>
+        <label for="text" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">📝 Texto da Redação</label>
+        <textarea id="text" name="text" rows="8" required
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500"
+          placeholder="Digite sua redação aqui... Mínimo de 200 palavras recomendado."></textarea>
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">💡 Dica: Use parágrafos bem estruturados e argumente suas ideias.</p>
       </div>
       <div>
-        <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Upload (PDF ou DOC
-          opcional)</label>
+        <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">📎 Upload (Opcional)</label>
         <input type="file" id="file" name="file" accept=".pdf,.doc,.docx"
-          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100" />
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-emerald-100 dark:file:bg-emerald-900 file:text-emerald-700 dark:file:text-emerald-300 file:cursor-pointer hover:file:bg-emerald-200 dark:hover:file:bg-emerald-800" />
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Formatos aceitos: PDF, DOC, DOCX</p>
       </div>
       <button type="submit"
-        class="w-full py-2 bg-emerald-600 text-white rounded-lg font-bold hover:bg-emerald-700 transition">Enviar
-        Redação</button>
+        class="w-full py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg font-bold hover:from-emerald-600 hover:to-emerald-700 transition-all transform hover:scale-[1.02] shadow-lg">
+        🚀 Enviar Redação para Correção
+      </button>
     </form>
   </section>
 
@@ -76,6 +89,64 @@
       </div>
 
     </div>
+  </section>
+
+  <!-- ===================== ÚLTIMAS REDAÇÕES ===================== -->
+  <section>
+    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">🗂️ Minhas últimas redações</h2>
+    {% if recent_essays %}
+      <div class="overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead class="bg-gray-50 dark:bg-gray-900">
+            <tr>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">ID</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Título</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Enviada em</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">PDF</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Visualizar</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+            {% for essay in recent_essays %}
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-900">
+                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">#{{ essay.id }}</td>
+                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">{{ essay.title }}</td>
+                <td class="px-4 py-3 text-sm">
+                  {% if essay.status == 'draft' %}
+                    <span class="px-2 py-1 rounded-full text-xs bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Rascunho</span>
+                  {% elif essay.status == 'submitted' %}
+                    <span class="px-2 py-1 rounded-full text-xs bg-blue-200 dark:bg-blue-900 text-blue-800 dark:text-blue-200">Enviada</span>
+                  {% elif essay.status == 'pending' %}
+                    <span class="px-2 py-1 rounded-full text-xs bg-yellow-200 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">Pendente</span>
+                  {% elif essay.status == 'corrected' %}
+                    <span class="px-2 py-1 rounded-full text-xs bg-emerald-200 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200">Corrigida</span>
+                  {% else %}
+                    <span class="px-2 py-1 rounded-full text-xs bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">{{ essay.status }}</span>
+                  {% endif %}
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-200">{{ essay.created_at }}</td>
+                <td class="px-4 py-3 text-sm">
+                  {% if essay.pdf %}
+                    <a href="{{ essay.pdf.url }}" class="text-emerald-600 hover:text-emerald-700 font-medium" target="_blank">Abrir PDF</a>
+                  {% else %}
+                    <span class="text-gray-500 dark:text-gray-400">—</span>
+                  {% endif %}
+                </td>
+                <td class="px-4 py-3 text-sm">
+                  <a href="{% url 'dashboard:pdf-flipbook' essay.id %}"
+                     class="inline-flex items-center px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">
+                    Ver Flipbook
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-sm text-gray-600 dark:text-gray-300">Você ainda não enviou nenhuma redação.</p>
+    {% endif %}
   </section>
 
   <!-- ===================== GRÁFICO RADAR ===================== -->
