@@ -126,12 +126,17 @@ git commit -m "docs: resolve merge conflict and add professional README"
 git push
 ```
 
-## ✅ COMO SABER SE DEU CERTO
+## 🔑 Acesso de Demonstração
 
-No GitHub:
+Este projeto é disponibilizado **exclusivamente para fins educacionais e de demonstração técnica**.
 
-- Não pode existir <<<<<<< nem >>>>>>>
-- Títulos grandes
-- Blocos de código cinza
-- Estrutura bonita e legível
-- Se aparecer assim → conflito resolvido + README profissional 🎯
+Para testar a aplicação, utilize as credenciais abaixo:
+
+- **Email:** demo@enem.com
+- **Senha:** demo1234
+
+> ⚠️ Este usuário possui permissões limitadas e não representa um ambiente de produção.
+
+## 📄 Termos de Uso
+
+Ao utilizar esta aplicação, você concorda que ela é fornecida "no estado em que se encontra", sem garantias de qualquer tipo. O autor não se responsabiliza por quaisquer danos decorrentes do uso desta aplicação.
