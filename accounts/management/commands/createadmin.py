@@ -1,6 +1,6 @@
-from django.core.management.base import BaseCommand
-from django.contrib.auth import get_user_model
 from decouple import config
+from django.contrib.auth import get_user_model
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -35,7 +35,7 @@ class Command(BaseCommand):
 
         if User.objects.filter(email=email).exists():
             self.stdout.write(
-                self.style.warning(
+                self.style.WARNING(
                     f"Superusuário com email {email} já existe. Nada a fazer."
                 )
             )

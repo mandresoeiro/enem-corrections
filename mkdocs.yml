@@ -1,0 +1,75 @@
+site_name: ENEM Corrections
+site_description: Sistema de correção de redações ENEM
+site_author: ENEM Corrections Team
+site_url: https://github.com/mandresoeiro/enem-corrections
+
+theme:
+  name: material
+  language: pt
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Modo escuro
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: pt
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Início: index.md
+  - Arquitetura: architecture.md
+  - Configuração:
+      - Settings Django: configuracao/settings.md
+      - Variáveis de Ambiente: configuracao/env.md
+  - Apps:
+      - Accounts: apps/accounts.md
+      - Profiles: apps/profiles.md
+      - Essays: apps/essays.md
+      - Performance: apps/performance.md
+      - Dashboard: apps/dashboard.md
+  - API:
+      - Accounts API: api/accounts-api.md
+      - Essays API: api/essays-api.md
+      - Performance API: api/performance-api.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/mandresoeiro/enem-corrections
+    - icon: fontawesome/brands/python
+      link: https://www.python.org/
+
+copyright: Copyright &copy; 2025 ENEM Corrections

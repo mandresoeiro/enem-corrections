@@ -1,14 +1,20 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
-<div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded shadow">
-  <h2 class="text-xl font-bold mb-4">Visualizar Redação em Flipbook</h2>
-  <div id="flipbook-container" class="w-full h-[600px]">
-    <!-- FlowPaper Flipbook Embed -->
-    <iframe src="https://flowpaper.com/flipbook/?pdf={{ pdf_url }}" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<div class="max-w-6xl mx-auto mt-10 p-6 bg-white rounded shadow">
+  <h2 class="text-xl font-bold mb-4">Visualizar Redação</h2>
+  <div id="pdf-viewer-container" class="w-full border rounded" style="height: 700px;">
+    <iframe src="{{ pdf_url }}" width="100%" height="100%" frameborder="0" style="border: none;"></iframe>
   </div>
-  <div class="mt-6">
-    <a href="{{ pdf_url }}" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded">Baixar PDF</a>
-    <a href="{% url 'dashboard:dashboard-role' 'teacher' %}" class="ml-4 text-gray-600 underline">Voltar ao Dashboard</a>
+  <div class="mt-6 flex gap-4">
+    <a href="{{ pdf_url }}" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
+      📥 Baixar PDF
+    </a>
+    <a href="{{ pdf_url }}" target="_blank" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition">
+      🔍 Abrir em Nova Aba
+    </a>
+    <a href="{% url 'dashboard:dashboard-role' 'teacher' %}" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded transition">
+      ← Voltar ao Dashboard
+    </a>
   </div>
 </div>
 {% endblock %}

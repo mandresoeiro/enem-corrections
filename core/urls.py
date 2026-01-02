@@ -12,12 +12,12 @@ Organização:
 8) Preparado para API v2
 """
 
-from django.contrib import admin
-from django.urls import path, include
-from django.http import JsonResponse
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.contrib import admin
+from django.http import JsonResponse
+from django.urls import include, path
+from django.views.generic import RedirectView
 
 # ==========================================================
 # HEALTHCHECK — útil em Docker, Railway, Render e CI/CD
@@ -66,6 +66,13 @@ urlpatterns = [
     # ------------------------------------------------------
     # Interface visual (classe protegida por login)
     path("", include("dashboard.urls")),
+    # Redirecionamentos para compatibilidade
+    path("teacher/", RedirectView.as_view(url="/dashboard/teacher/", permanent=True)),
+    path("student/", RedirectView.as_view(url="/dashboard/student/", permanent=True)),
+    path(
+        "admin-dashboard/",
+        RedirectView.as_view(url="/dashboard/admin/", permanent=True),
+    ),
     # ------------------------------------------------------
     # 5. API REST — versão 1
     # ------------------------------------------------------

@@ -1,14 +1,28 @@
 {% load static %}
 <aside
   class="fixed inset-y-0 left-0 z-40 w-52 transform bg-[#1d2141] border-r border-[#285aa6] shadow-xl transition-transform duration-300 ease-in-out lg:static lg:translate-x-0"
-  :class="{ '-translate-x-full': !sidebarOpen }">
+  :class="{ '-translate-x-full': !sidebarOpen }"
+>
   <!-- LOGO + CARD TOPO COM NOME E BOTÃO TEMA -->
-  <div class="m-4 rounded-2xl bg-[#23293a] p-6 flex flex-col items-center justify-between shadow-lg">
-    <img src="{% static 'dashboard/img/logo.png' %}" alt="Logo ENEM Corrections" class="h-20 w-auto mb-2 drop-shadow-lg" />
-    <span class="text-xl font-extrabold text-[#6ee7b7] mb-2">ENEM Corrections</span>
+  <div
+    class="m-4 rounded-2xl bg-[#23293a] p-6 flex flex-col items-center justify-between shadow-lg"
+  >
+    <img
+      src="{% static 'dashboard/img/logo1.png' %}"
+      alt=""
+      class="h-20 w-auto mb-2 drop-shadow-lg"
+    />
+    <span class="text-xl font-extrabold text-[#6ee7b7] mb-2"></span>
     <button
-      class="flex items-center gap-1 px-3 py-1 rounded-lg bg-[#23293a] border border-[#31394d] text-gray-200 text-xs font-semibold shadow hover:bg-[#31394d] transition">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      class="flex items-center gap-1 px-3 py-1 rounded-lg bg-[#23293a] border border-[#31394d] text-gray-200 text-xs font-semibold shadow hover:bg-[#31394d] transition"
+    >
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+      >
         <circle cx="12" cy="12" r="10" fill="#fbbf24" />
         <path d="M12 2v20M2 12h20" stroke="#a78bfa" stroke-width="2" />
       </svg>
@@ -19,40 +33,85 @@
   <!-- NAVEGAÇÃO PRINCIPAL -->
   <nav class="px-2 py-4 space-y-8 overflow-y-auto">
     <div>
-      <h3 class="text-xs font-semibold uppercase tracking-wide text-[#2eb399] px-2 mb-2">Dashboard</h3>
+      <h3
+        class="text-xs font-semibold uppercase tracking-wide text-[#2eb399] px-2 mb-2"
+      >
+        Dashboard
+      </h3>
       <ul class="space-y-1">
         {% if request.user.role == 'student' %}
         <li>
-          <a href="/dashboard/"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg transition text-white hover:bg-[#285aa6] hover:text-[#2eb399] font-medium relative {% if request.path == '/dashboard/' %}bg-[#2eb399] text-white font-semibold{% endif %}">
-            <svg class="w-5 h-5 text-[#2eb399]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+          <a
+            href="/dashboard/"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg transition text-white hover:bg-[#285aa6] hover:text-[#2eb399] font-medium relative {% if request.path == '/dashboard/' %}bg-[#2eb399] text-white font-semibold{% endif %}"
+          >
+            <svg
+              class="w-5 h-5 text-[#2eb399]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 14l9-5-9-5-9 5 9 5z"
+              />
             </svg>
             <span>Meu Desempenho</span>
           </a>
         </li>
         {% elif request.user.role == 'teacher' %}
         <li>
-          <a href="/dashboard/"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg transition text-white hover:bg-[#285aa6] hover:text-[#2eb399] font-medium relative {% if request.path == '/dashboard/' %}bg-[#2eb399] text-white font-semibold{% endif %}">
-            <svg class="w-5 h-5 text-[#2eb399]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 01-8 0" />
+          <a
+            href="/dashboard/"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg transition text-white hover:bg-[#285aa6] hover:text-[#2eb399] font-medium relative {% if request.path == '/dashboard/' %}bg-[#2eb399] text-white font-semibold{% endif %}"
+          >
+            <svg
+              class="w-5 h-5 text-[#2eb399]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 7a4 4 0 01-8 0"
+              />
               <circle cx="12" cy="7" r="4" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 21v-2a4 4 0 014-4h0a4 4 0 014 4v2" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 21v-2a4 4 0 014-4h0a4 4 0 014 4v2"
+              />
             </svg>
             <span>Correções</span>
           </a>
         </li>
         <li class="relative">
-          <a href="/essays/pendentes/"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg transition text-white hover:bg-[#285aa6] hover:text-[#2eb399] font-medium relative {% if '/essays/pendentes/' in request.path %}bg-[#2eb399] text-white font-semibold{% endif %}">
-            <svg class="w-5 h-5 text-[#2eb399]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
+          <a
+            href="/essays/pendentes/"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg transition text-white hover:bg-[#285aa6] hover:text-[#2eb399] font-medium relative {% if '/essays/pendentes/' in request.path %}bg-[#2eb399] text-white font-semibold{% endif %}"
+          >
+            <svg
+              class="w-5 h-5 text-[#2eb399]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"
+              />
             </svg>
             <span>Pendências</span>
             {% if pending_count and pending_count > 0 %}
-            <span class="absolute top-1 right-3 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+            <span
+              class="absolute top-1 right-3 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5"
+            >
               {{ pending_count }}
             </span>
             {% endif %}
@@ -60,10 +119,22 @@
         </li>
         {% elif request.user.role == 'admin' %}
         <li>
-          <a href="/dashboard/"
-            class="flex items-center gap-3 px-3 py-2 rounded-lg transition text-white hover:bg-[#285aa6] hover:text-[#2eb399] font-medium relative {% if request.path == '/dashboard/' %}bg-[#2eb399] text-white font-semibold{% endif %}">
-            <svg class="w-5 h-5 text-[#2eb399]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3" />
+          <a
+            href="/dashboard/"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg transition text-white hover:bg-[#285aa6] hover:text-[#2eb399] font-medium relative {% if request.path == '/dashboard/' %}bg-[#2eb399] text-white font-semibold{% endif %}"
+          >
+            <svg
+              class="w-5 h-5 text-[#2eb399]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 8v4l3 3"
+              />
               <circle cx="12" cy="12" r="10" />
             </svg>
             <span>Administração</span>
@@ -75,14 +146,25 @@
   </nav>
 
   <!-- RODAPÉ COM ATALHOS -->
-  <footer class="absolute bottom-0 w-full p-4 border-t border-[#285aa6] bg-[#1d2141]">
+  <footer
+    class="absolute bottom-0 w-full p-4 border-t border-[#285aa6] bg-[#1d2141]"
+  >
     <div class="flex gap-2 mt-2 justify-center">
-      <a href="/dashboard/"
-        class="px-2 py-1 rounded bg-[#285aa6] text-white text-sm font-bold hover:bg-[#2eb399] hover:text-[#1d2141] transition">🏠</a>
-      <a href="/accounts/me/"
-        class="px-2 py-1 rounded bg-[#285aa6] text-white text-sm font-bold hover:bg-[#2eb399] hover:text-[#1d2141] transition">👤</a>
-      <a href="/dashboard/help/"
-        class="px-2 py-1 rounded bg-[#285aa6] text-white text-sm font-bold hover:bg-[#2eb399] hover:text-[#1d2141] transition">❓</a>
+      <a
+        href="/dashboard/"
+        class="px-2 py-1 rounded bg-[#285aa6] text-white text-sm font-bold hover:bg-[#2eb399] hover:text-[#1d2141] transition"
+        >🏠</a
+      >
+      <a
+        href="/accounts/me/"
+        class="px-2 py-1 rounded bg-[#285aa6] text-white text-sm font-bold hover:bg-[#2eb399] hover:text-[#1d2141] transition"
+        >👤</a
+      >
+      <a
+        href="/dashboard/help/"
+        class="px-2 py-1 rounded bg-[#285aa6] text-white text-sm font-bold hover:bg-[#2eb399] hover:text-[#1d2141] transition"
+        >❓</a
+      >
     </div>
   </footer>
 </aside>

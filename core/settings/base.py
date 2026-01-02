@@ -21,11 +21,11 @@ Tudo deve vir do .env via python-decouple.
 ===============================================================
 """
 
-from pathlib import Path
-from datetime import timedelta
-from decouple import config
 import os
+from datetime import timedelta
+from pathlib import Path
 
+from decouple import config
 
 # ==============================================================
 # 0. DIRETÓRIOS BÁSICOS
@@ -78,7 +78,6 @@ INSTALLED_APPS = [
     # Admin moderno (Jazzmin)
     # ------------------------------
     "jazzmin",  # deve vir antes do django.contrib.admin
-
     # ------------------------------
     # Apps nativos Django
     # ------------------------------
@@ -89,7 +88,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",  # necessário para django-allauth
-
     # ------------------------------
     # Apps de terceiros
     # ------------------------------
@@ -101,7 +99,6 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-
     # ------------------------------
     # Apps internos do projeto
     # ------------------------------
@@ -125,19 +122,14 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-
     # Proteção contra ataques CSRF
     "django.middleware.csrf.CsrfViewMiddleware",
-
     # Autenticação de usuário
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-
     # Necessário para o allauth (senão dá erro)
     "allauth.account.middleware.AccountMiddleware",
-
     # Mensagens → message.success(), message.error()
     "django.contrib.messages.middleware.MessageMiddleware",
-
     # Proteção contra clickjacking
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -161,16 +153,13 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-
         # Locais adicionais para templates globais
         "DIRS": [
             BASE_DIR / "visual" / "templates",
             BASE_DIR / "dashboard" / "templates",
         ],
-
         # Permite buscar templates automaticamente dentro de cada app
         "APP_DIRS": True,
-
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -238,7 +227,8 @@ LOGOUT_REDIRECT_URL = "/accounts/login/"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",  # Login via navegador
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # Login via API
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -302,7 +292,6 @@ JAZZMIN_SETTINGS = {
     "show_sidebar": True,
     "navigation_expanded": True,
     "show_ui_builder": False,
-
     # Ordem dos apps no menu lateral
     "order_with_respect_to": [
         "accounts",
@@ -311,12 +300,10 @@ JAZZMIN_SETTINGS = {
         "performance",
         "dashboard",
     ],
-
     "topmenu_links": [
         {"name": "Dashboard", "url": "admin:index"},
         {"name": "Github", "url": "https://github.com/soeirotech"},
     ],
-
     # Ícones (Font Awesome)
     "icons": {
         "accounts.CustomUser": "fas fa-user",
@@ -327,7 +314,6 @@ JAZZMIN_SETTINGS = {
         "performance": "fas fa-chart-line",
         "dashboard": "fas fa-tachometer-alt",
     },
-
     "default_icon_parents": "fas fa-folder",
     "default_icon_children": "fas fa-file",
     "site_color": "green",
